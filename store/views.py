@@ -2,37 +2,54 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from store.forms import VisitForm, TradeForm, TerritoryForm, SkuForm
-from store.models import Trade, Sku, Visit, Territory
+from store.models import Details, Sku, United, Visit
 
 
 def index(request):
     skus = Sku.objects.all()
     visit = Visit.objects.all()
-    active = Sku.objects.all()
-    sku_id = request.GET.get('Sku')
+    united = United.objects.all()
+    detail = Details.objects.all()
+
     form = VisitForm(request.POST or None, request.FILES or None)
+
     if request.method == 'POST':
         trade = request.POST.get('trade')
         territory = request.POST.get('territory')
+        comment = request.POST.get('comment')
         user = request.user.id
         sku_names = [x.sku_name for x in Sku.objects.all()]
+        print(sku_names)
+        detail_name = [y.name for y in Details.objects.all()]
         sku_ids = []
+        detail_tuple = []
         for x in sku_names:
-            sku_ids.append(int(request.POST.get(x))) if request.POST.get(x) else print('0')
+            sku_ids.append(int(request.POST.get(x))
+                           )if request.POST.get(x) else print('0')
         print(sku_ids)
+        for y in detail_name:
+            detail_tuple.append(request.POST.get(y)) if request.POST.get(y) else print('17')
+        print(detail_tuple)
         visit = Visit.objects.create(
             trade_id=trade,
             territory_id=territory,
             user_id=user,
+            comment=comment
         )
         for x in sku_ids:
             visit.sku.add(Sku.objects.get(id=x))
+        for y in detail_tuple:
+            visit.detail.add(Details.objects.get(id=y))
+        form.is_valid
         return redirect('store:home')
 
     return render(request, 'home.html', {
         'visit': visit,
         'skus': skus,
-        'form': form
+        'details': detail,
+        'uniteds': united,
+        'form': form,
+
     })
 
 
@@ -86,3 +103,7 @@ def edit_sku(request, pk):
 def del_sku(request, pk):
     author = Sku.objects.get(pk=pk).delete()
     return redirect('store:home')
+
+
+def test(request):
+    return render(request, 'index.html')

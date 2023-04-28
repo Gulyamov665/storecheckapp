@@ -2,71 +2,140 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
+    <header class="d-flex justify-content-center py-3">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button class="btn btn-outline-warning  mx-5" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="title text-light">Welcome : {{ user }}</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url 'store:create_sku' %}" class="btn text-capitalize dropdown-item">
+                                Add Sku Position
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'store:create_trade' %}" class="btn text-capitalize dropdown-item">
+                                Add Market
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'store:create_territory' %}" class="btn text-capitalize dropdown-item">
+                                Add Territory
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'users:sign_out' %}">Exit</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<br><br>
+<div class="tabs">
+    <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+    <label for="tab-btn-1">Storecheck</label>
+    <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+    <label for="tab-btn-2">Details</label>
+
+    <div id="content-1"> 
     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
         <div class="container">
             <div class="row text-center">
                 {% for sk in skus %}
-                    {% if user == sk.user %}
-                        <div class="col-6 col-sm-4 col-md-4 col-lg-2 mb-4 ">
-                        {% if sk.img %}
-                            <img src="{{ sk.img.url }}" alt="Burger" class="img1">
-                        {% endif %}
-                            <br>
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn dropdown"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="material-symbols-outlined text-light">Edit</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{% url 'store:edit_sku' sk.pk %} "
-                                           class="btn text-capitalize dropdown-item">
-                                            Edit SKU
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'store:del_sku' sk.pk %}"
-                                           class="btn text-capitalize dropdown-item ">
-                                            Delete SKU
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="text-center">
-                                <label class="checkbox-btn">
-                                    <input type="checkbox" name="{{ sk.sku_name }}"
-                                           value="{{ sk.id }}"><span>{{ sk.sku_name }}</span>
-                                </label>
-                            </div>
-                        </div>
+                {% if user == sk.user %}
+                <div class="col-6 col-sm-4 col-md-4 col-lg-2 mb-4 ">
+                    {% if sk.img %}
+                    <img src="{{ sk.img.url }}" alt="Burger" class="img1">
                     {% endif %}
+                    <br>
+                    <div class="btn-group dropend">
+                        <button type="button" class="btn dropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="material-symbols-outlined text-light">Edit</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{% url 'store:edit_sku' sk.pk %} "
+                                   class="btn text-capitalize dropdown-item">
+                                    Edit SKU
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'store:del_sku' sk.pk %}"
+                                   class="btn text-capitalize dropdown-item ">
+                                    Delete SKU
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <label class="checkbox-btn">
+                            <input type="checkbox" name="{{ sk.sku_name }}"
+                                   value="{{ sk.id }}"><span>{{ sk.sku_name }}</span>
+                        </label>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
-        <div class="container text-md-center text-start my-5">
-            <div class="row gy-3">
-                <div class="col-12 col-md-6">
-                    <label for="id_trade">
-                        <p class="text-light">Market:</p>
-                        {{ form.trade }}
-                    </label>
+       
+</div>
+ <div id="content-2">
+    <div class="container">
+        <div class="row text-center">
+            {% for detail in details %}
+                {% if user == detail.user %}
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-2 mb-4 mt-5">
+                        <div class="">
+                            <label class="checkbox-btn">
+                                <input type="checkbox" name="{{ detail.name }}"
+                                       value="{{ detail.id }}"><span>{{ detail.name }}</span>
+                            </label>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="text-center mb-4">
+                    <div class="text-light text-capitalize mb-2">{{form.comment.label}}:</div>
+                    {{ form.comment }}
                 </div>
-                <div class="col-12 col-md-6" data-placeholder="Dss">
-                    <label for="id_trade">
-                        <p class="text-light ">Territory:</p>
-                        {{ form.territory }}
-                    </label>
-                </div>
-                <button type="submit" class="btn fw-medium btn-warning btn2 mt-5 mb-md-4" value="Save">
-                    Send
-                </button>
-                <a href="{% url 'excel:export' %}" class="c">Download Vistits</a>
             </div>
         </div>
-    </form>
-
-
-
+    </div>
+    
+    <div class="container text-md-center text-start my-5">
+        <div class="row gy-3">
+            <div class="col-12 col-md-6">
+                <label for="id_trade">
+                    <p class="text-light">Market:</p>
+                    {{ form.trade }}
+                </label>
+            </div>
+            <div class="col-12 col-md-6">
+                <label for="id_trade">
+                    <p class="text-light">Territory:</p>
+                    {{ form.territory }}
+                </label>
+            </div>
+            <button type="submit" class="btn fw-medium btn-warning btn2 mt-5 mb-md-4" value="Save">
+                Send
+            </button>
+            <a href="{% url 'excel:export' %}" class="c">Download Vistits</a>
+        </div>
+    </div>
+</form>
+    </div>
 
 
 {% endblock %}

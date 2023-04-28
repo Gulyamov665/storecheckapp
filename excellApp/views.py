@@ -4,7 +4,7 @@ from itertools import count
 from django.http import HttpResponse
 from openpyxl.styles import Font, Alignment
 import openpyxl
-from store.models import Visit, Sku, Trade
+from store.models import Visit, Sku, Details
 
 
 def export_xlsx(request):
@@ -23,7 +23,17 @@ def export_xlsx(request):
         column = i + 3  # Start at cell C1
         ws.cell(row=1, column=column, value=sku_name).alignment = Alignment(textRotation=90)
 
-    ws.cell(row=1, column=column + 1, value='Comments')
+    sku_column_count = len(sku_names)
+
+    details_names = list(Details.objects.filter().values_list('name', flat=True))
+    for i, detail in enumerate(details_names):
+        column_detail = i + 3
+        detail_column = sku_column_count + column_detail
+        ws.cell(row=1, column=detail_column, value=detail)
+
+    ws.cell(row=1, column=detail_column + 1, value='Comments')
+
+    ws.cell(row=1, column=detail_column + 2, value='Percent')
     # Get all visits for the current user
     default_date = date.today()
     user_visits = Visit.objects.filter(visit_date=default_date).filter(user=request.user).prefetch_related('sku')
@@ -34,8 +44,11 @@ def export_xlsx(request):
         ws.cell(row=row, column=1, value=visit.territory.territory_name)
         ws.cell(row=row, column=2, value=visit.trade.trade_name)
 
+        ws.cell(row=row, column=detail_column + 1, value=visit.comment)
+
         # Get all Sku names
         all_sku_names = list(Sku.objects.filter(user=request.user).values_list('sku_name', flat=True))
+        all_detail_names = Details.objects.filter(user=request.user)
 
         num_sku = 0
         num_sku_found = 0
@@ -52,13 +65,19 @@ def export_xlsx(request):
                 num_sku_not_found += 1
             num_sku += 1
 
-        percentage_sku_found = round((num_sku_found / num_sku) * 100)
-        ws.cell(row=row, column=column + 2, value=f'{percentage_sku_found}%')
+        for g, detail in enumerate(all_detail_names):
+            column_detail = g + 3
+            detail_column = sku_column_count + column_detail
 
-        # result = num_sku_found + num_sku_not_found
-        #
-        # percentage_sku = round((num_sku_found / result) * 100)
-        # ws.cell(row=column, column=row + 1, value=f'{percentage_sku}%')
+            if detail.name in [detail.name for detail in visit.detail.all()]:
+                ws.cell(row=row, column=detail_column, value=1)
+                
+            else:
+                ws.cell(row=row, column=detail_column, value=0)
+                
+        percentage_sku_found = round((num_sku_found / num_sku) * 100)
+        ws.cell(row=row, column=detail_column + 2, value=f'{percentage_sku_found}%')
+
 
     wb.save(response)
     return response
