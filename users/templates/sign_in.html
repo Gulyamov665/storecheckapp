@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{#    <section class="section is-medium has-background-info" style="height: 100vh">#}
+{#        <form class="site-form has-text-centered has-background-light" method="post">#}
+{#            <h1 class="title is-size-2 has-text-centered">Sign in</h1>#}
+{#            {% csrf_token %}#}
+{#            {% for field in form %}#}
+{#                <div class="field">#}
+{#                    <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>#}
+{#                    <input type="text">#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#            <button class="button is-success is-fullwidth mt-4" type="submit">Sign in</button>#}
+{#            <p class="content mt-3">#}
+{#                Already have an account?#}
+{#                <span>#}
+{#                    <a href="{% url 'users:sign_up' %}">Sign in here</a>#}
+{#                </span>#}
+{#            </p>#}
+{#        </form>#}
+{#    </section>#}
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-3 text-center">
+        <form enctype="multipart/form-data" method="post">
+            {% for forms in form %}
+                {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ forms.id_for_label }}" class="form-label">{{ forms.label }}</label>
+                {{ forms }}
+            </div>
+            {% endfor %}
+{#                <input id="{{ form.username.id_for_label }}" type="{{ form.fields }}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">#}
+
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label">{{ form.password.label }}</label>#}
+{#                <input id="{{ form.password.id_for_label }}" type="{{ form.password.field }}" class="form-control" id="exampleInputPassword1">#}
+{#            </div>#}
+{#            <div class="mb-3 form-check">#}
+{#                <input type="checkbox" class="form-check-input" id="exampleCheck1">#}
+{#                <label class="form-check-label" for="exampleCheck1">Remember me</label>#}
+{#            </div>#}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        </div>
+    </div>
+
+    </div>
+{% endblock %}

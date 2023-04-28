@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="form-signin w-100 m-auto">
+
+        <form class="form  has-text-centered" method="post">
+            <h1 class="title is-size-2 has-text-centered">Sign In</h1>
+            {% csrf_token %}
+            {#            {% for field in form %}#}
+            {#                <div class="form-floating">#}
+            {#                    <label for="{{ field.id_for_label }}"></label>#}
+            {#                    <div class="form-control">{{ field }}</div>#}
+            {#                    <input type="{{ field.type }}" class="form-control" formaction="{{ field }}">#}
+            {#                </div>#}
+            {#            {% endfor %}#}
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" formaction={{ form.username }}
+                <label for="floatingInput">Login</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" placeholder="Password" formaction={{ form.password }}
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <button type="submit" class="w-100 btn btn-lg btn-primary">
+                Войти
+            </button>
+            <p class="content mt-3 text-dark">
+                <a class="text-decoration-none" href="{% url 'users:sign_up' %}">Register</a>
+            </p>
+        </form>
+    </div>
+
+{% endblock %}

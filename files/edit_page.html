@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <form action="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+        {% for forms in form %}
+            {{ forms}}
+        {% endfor %}
+    <button class="btn btn-warning" type="submit">Ok</button>
+    </form>
+{% endblock %}

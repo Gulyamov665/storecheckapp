@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {#<------------form for add Territory---------------->#}
+    <form class="site-form has-background-light" method="post"
+          action="" id="territory"
+          enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in territory_form %}
+            <div class="container text-center">
+                <label for="{{ field.id_for_label }}" class="title col-form-label">
+                    {{ field.label }}
+                </label>
+                <div class="">
+                    {{ field }}
+                </div>
+                <button type="submit" class="btn btn-info mx-2 mt-3"><span class="title">Отправить</span></button>
+                <a href="{% url 'store:home' %}" type="button" class="btn btn-warning mt-3 mx-2"><span class="title">Назад</span></a>
+            </div>
+        {% endfor %}
+    </form>
+    {#<------------form-END for add Territory---------------->#}
+
+    {#<-------------------form for add SKU------------------->#}
+    <form class="site-form has-background-light" method="post"
+          action="" id="trade"
+          enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for sku_forms in sku_form %}
+            <div class="container text-center">
+                <label for="{{ sku_forms.id_for_label }}" class="title col-form-label">
+                    {{ sku_forms.label }}
+                </label>
+                <div class="">
+                    {{ sku_forms }}
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-info mx-2 mt-3"><span class="title">Отправить</span></button>
+        <a href="{% url 'store:home' %}" type="button" class="btn btn-warning mt-3 mx-2"><span
+                class="title">Назад</span></a>
+    </form>
+    {#<-------------------form-END for add SKU------------------->#}
+
+    {#<---------------form for add Trade------------------------>#}
+    <form class="site-form has-background-light" method="post"
+          action="" id="trade"
+          enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for trade_forms in trade_form %}
+            <div class="container text-center">
+                <label for="{{ trade_forms.id_for_label }}" class="title col-form-label">
+                    {{ trade_forms.label }}
+                </label>
+                <div class="">
+                    {{ trade_forms }}
+                </div>
+                <button type="submit" class="btn btn-info mx-2 mt-3"><span class="title">Отправить</span></button>
+                <a href="{% url 'store:home' %}" type="button" class="btn btn-warning mt-3 mx-2"><span class="title">Назад</span></a>
+            </div>
+        {% endfor %}
+    </form>
+    <div class="modal-footer mt-4"></div>
+    {#<---------------form-END for add Trade------------------------>#}
+{% endblock %}
