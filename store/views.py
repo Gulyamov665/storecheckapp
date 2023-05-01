@@ -19,17 +19,16 @@ def index(request):
         comment = request.POST.get('comment')
         user = request.user.id
         sku_names = [x.sku_name for x in Sku.objects.all()]
-        print(sku_names)
         detail_name = [y.name for y in Details.objects.all()]
         sku_ids = []
         detail_tuple = []
         for x in sku_names:
             sku_ids.append(int(request.POST.get(x))
                            )if request.POST.get(x) else print('0')
-        print(sku_ids)
+        
         for y in detail_name:
             detail_tuple.append(request.POST.get(y)) if request.POST.get(y) else print('17')
-        print(detail_tuple)
+        
         visit = Visit.objects.create(
             trade_id=trade,
             territory_id=territory,
