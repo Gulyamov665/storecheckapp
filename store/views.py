@@ -13,7 +13,6 @@ def index(request):
     user = request.user.id
     form = VisitForm(request.POST or request.FILES or None)
 
-
     if request.method == 'POST':
         trade = request.POST.get('trade')
         territory = request.POST.get('territory')
@@ -39,11 +38,11 @@ def index(request):
             visit.detail.add(Details.objects.get(id=t))
         form.is_valid()
         return redirect('store:home')
-   
+
     return render(request, 'home.html', {
         'visit': visit,
         'skus': skus,
-        'details': detail, 
+        'details': detail,
         'form': form,
         'uniteds': united,
     })
@@ -101,7 +100,7 @@ def del_sku(request, pk):
     return redirect('store:home')
 
 
-def create_deatil(request):
+def create_detail(request):
     form_detail = DetailForm(request.POST or None)
     if request.method == 'POST' and form_detail.is_valid():
         instance = form_detail.save(commit=False)
@@ -111,3 +110,19 @@ def create_deatil(request):
     return render(request, 'create_and_edit_items/create_detail.html', {
         'form_detail': form_detail
     })
+
+
+def edit_detail(request, pk):
+    detail = get_object_or_404(Details, pk=pk)
+    form = DetailForm(request.POST or None, request.FILES or None, instance=detail)
+    if form.is_valid():
+        form.save()
+        return redirect('store:home')
+    return render(request, 'create_and_edit_items/edit_page.html', {
+        'form': form
+    })
+
+
+def del_detail(request, pk):
+    author = Details.objects.get(pk=pk).delete()
+    return redirect('store:home')
