@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from store.models import Details, Trade, Sku, United, Visit, Territory
+from store.models import Details, Trade, Sku, United, Visit, Territory, PercentItem
 
 
 class VisitAdmin(admin.ModelAdmin):
@@ -14,3 +14,4 @@ admin.site.register(Sku)
 admin.site.register(Territory)
 admin.site.register(Details)
 admin.site.register(United)
+admin.site.register(PercentItem)

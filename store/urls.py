@@ -6,6 +6,7 @@ from store import views
 urlpatterns = [
     path('home', views.index, name='home'),
     path('test', views.test, name='test'),
+    path('percent/', views.create_united, name='create_united'),
     path('create_sku', views.create_sku, name='create_sku'),
     path('create_trade', views.create_trade, name='create_trade'),
     path('create_territory', views.create_territory, name='create_territory'),

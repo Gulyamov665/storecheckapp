@@ -1,6 +1,6 @@
 from django import forms
 
-from store.models import Details, Visit, Territory, Trade, Sku
+from store.models import Details, United, Visit, Territory, Trade, Sku, Percents
 
 
 class VisitForm(forms.ModelForm):
@@ -12,7 +12,7 @@ class VisitForm(forms.ModelForm):
 
     class Meta:
         model = Visit
-        fields = ['trade', 'territory', 'sku', 'detail','comment']
+        fields = ['trade', 'territory', 'sku', 'detail', 'comment']
 
 
 class TerritoryForm(forms.ModelForm):
@@ -43,8 +43,19 @@ class SkuForm(forms.ModelForm):
         model = Sku
         fields = ['img', 'sku_name']
 
+
 class DetailsForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput, required=False)
+
     class Meta:
         model = Details
         fields = ['name']
+
+
+class UnitedForm(forms.ModelForm):
+    percent = forms.ChoiceField(choices=Percents, widget=forms.Select(attrs={'class': 'form-control'}),required=True,
+                                label='Percents')
+
+    class Meta:
+        model = United
+        fields = ['percent']

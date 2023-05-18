@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from store.forms import VisitForm, TradeForm, TerritoryForm, SkuForm
-from store.models import Details, Sku, United, Visit
+from store.forms import VisitForm, TradeForm, TerritoryForm, SkuForm, UnitedForm
+from store.models import Details, Sku, United, Visit, PercentItem
 
 
 def index(request):
@@ -23,12 +23,11 @@ def index(request):
         sku_ids = []
         detail_tuple = []
         for x in sku_names:
-            sku_ids.append(int(request.POST.get(x))
-                           )if request.POST.get(x) else print('0')
-        
+            sku_ids.append(int(request.POST.get(x))) if request.POST.get(x) else print('0')
+        print(sku_ids, 'sss')
         for y in detail_name:
             detail_tuple.append(request.POST.get(y)) if request.POST.get(y) else print('17')
-        
+
         visit = Visit.objects.create(
             trade_id=trade,
             territory_id=territory,
@@ -39,7 +38,7 @@ def index(request):
             visit.sku.add(Sku.objects.get(id=x))
         for y in detail_tuple:
             visit.detail.add(Details.objects.get(id=y))
-        form.is_valid
+        form.is_valid()
         return redirect('store:home')
 
     return render(request, 'home.html', {
@@ -48,7 +47,22 @@ def index(request):
         'details': detail,
         'uniteds': united,
         'form': form,
+        'percent_it': PercentItem.objects.all(),
+        'form_un': UnitedForm()
 
+    })
+
+
+
+def create_united(request):
+    if request.method == 'POST':
+        form_un = UnitedForm(request.POST or None)
+        if form_un.is_valid():
+            form_un.save()
+            return redirect('store:home')
+    return render(request, 'create_and_edit_items/percent.html', {
+        'form_un': UnitedForm(),
+        'percent_it': PercentItem.objects.all()
     })
 
 
@@ -59,7 +73,8 @@ def create_trade(request):
         trade_form.save()
         return redirect('store:home')
     return render(request, 'create_and_edit_items/create_trade.html', {
-        'trade_form': trade_form
+        'trade_form': trade_form,
+
     })
 
 

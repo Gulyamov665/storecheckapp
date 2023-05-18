@@ -18,12 +18,18 @@ class Trade(models.Model):
 
 
 class Details(models.Model):
-    user = models.ForeignKey(
-        User, default=None, on_delete=CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, default=None, on_delete=CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.name
+
+
+class PercentItem(models.Model):
+    name_per = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name_per
 
 
 a = '10%'
@@ -44,16 +50,14 @@ Percents = [
 
 
 class United(models.Model):
-    detail = models.ForeignKey(Details, CASCADE, blank=True, null=True)
     percent = models.CharField(max_length=20, choices=Percents, null=True)
 
     def __str__(self):
-        return f'{self.detail} {self.percent}'
+        return f'{self.percent}'
 
 
 class Sku(models.Model):
-    img = models.FileField(upload_to='media/%y/%m/%d/',
-                           default='default.png', blank=True)
+    img = models.FileField(upload_to='media/%y/%m/%d/', default='default.png', blank=True)
     sku_name = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
@@ -62,10 +66,8 @@ class Sku(models.Model):
 
 
 class Visit(models.Model):
-    territory = models.ForeignKey(
-        Territory, on_delete=models.CASCADE, null=True, related_name='Территория')
-    trade = models.ForeignKey(
-        Trade, on_delete=models.CASCADE, related_name='Магазин')
+    territory = models.ForeignKey(Territory, on_delete=models.CASCADE, null=True, related_name='Территория')
+    trade = models.ForeignKey(Trade, on_delete=models.CASCADE, related_name='Магазин')
     sku = models.ManyToManyField(Sku, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     united = models.ManyToManyField(United, blank=True)
