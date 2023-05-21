@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97cd6950-46c9-426e-b982-270fb2b252e7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/excellApp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/excellApp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/templates/create_and_edit_items/percent.html" beforeDir="false" afterPath="$PROJECT_DIR$/store/templates/create_and_edit_items/percent.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/store/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/store/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +68,10 @@
       <option name="presentableId" value="Default" />
       <updated>1684311210719</updated>
       <workItem from="1684311213345" duration="13107000" />
-      <workItem from="1684389634667" duration="16997000" />
+      <workItem from="1684389634667" duration="18590000" />
+      <workItem from="1684477304197" duration="842000" />
+      <workItem from="1684508409804" duration="49000" />
+      <workItem from="1684679500886" duration="1263000" />
     </task>
     <servers />
   </component>

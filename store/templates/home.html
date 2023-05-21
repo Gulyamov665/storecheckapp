@@ -91,7 +91,7 @@
                 {% include 'create_and_edit_items/percent.html' %}
             </div>
             <div class="my-4">
-                <button type="submit" id="submit_all" class="btn btn-primary">Submit all</button>
+                <button type="submit"  class="btn btn-primary">Submit all</button>
             </div>
             <form action="" id="sku_form" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <div class="container">
@@ -139,7 +139,7 @@
                             </label>
                         </div>
 
-                        <button type="submit" id="sku_form" class="btn fw-medium btn-warning btn2 mt-5 mb-md-4" value="Save">
+                        <button type="submit" id="submit_all" class="btn fw-medium btn-warning btn2 mt-5 mb-md-4" value="Save">
                             Send
                         </button>
                         <a href="{% url 'excel:export' %}" class="c">Download Vistits</a>

@@ -31,9 +31,12 @@ def export_xlsx(request):
         detail_column = sku_column_count + column_detail
         ws.cell(row=1, column=detail_column, value=detail)
 
-    ws.cell(row=1, column=detail_column + 1, value='Comments')
+    coment = len(sku_names)+len(details_names)
 
-    ws.cell(row=1, column=detail_column + 2, value='Percent')
+    ws.cell(row=1, column=coment + 3, value='Comments')
+    ws.cell(row=1, column=coment + 4, value='Percent')
+
+
     # Get all visits for the current user
     default_date = date.today()
     user_visits = Visit.objects.filter(visit_date=default_date).filter(user=request.user).prefetch_related('sku')
@@ -44,7 +47,7 @@ def export_xlsx(request):
         ws.cell(row=row, column=1, value=visit.territory.territory_name)
         ws.cell(row=row, column=2, value=visit.trade.trade_name)
 
-        ws.cell(row=row, column=detail_column + 1, value=visit.comment)
+        ws.cell(row=row, column=coment + 3, value=visit.comment)
 
         # Get all Sku names
         all_sku_names = list(Sku.objects.filter(user=request.user).values_list('sku_name', flat=True))
@@ -70,13 +73,13 @@ def export_xlsx(request):
             detail_column = sku_column_count + column_detail
 
             if detail.name in [detail.name for detail in visit.detail.all()]:
-                ws.cell(row=row, column=detail_column, value=1)
+                ws.cell(row=row, column=detail_column, value='+')
                 
             else:
                 ws.cell(row=row, column=detail_column, value=0)
                 
         percentage_sku_found = round((num_sku_found / num_sku) * 100)
-        ws.cell(row=row, column=detail_column + 2, value=f'{percentage_sku_found}%')
+        ws.cell(row=row, column=coment + 4, value=f'{percentage_sku_found}%')
 
 
     wb.save(response)
