@@ -42,7 +42,9 @@
         <label for="tab-btn-2">Details</label>
 
         <div id="content-1">
-            <form action="" enctype="multipart/form-data" id="sku_form" method="post">{% csrf_token %}
+            <form hx-post="{% url 'store:home' %}" enctype="multipart/form-data" id="sku_form" method="post"
+                  hx-on="htmx:afterRequest: this.remove()"
+                  hx-trigger="click from:#submit_all">{% csrf_token %}
                 <div class="container">
                     <div class="row text-center">
                         {% for sk in skus %}
@@ -83,17 +85,8 @@
                         {% endfor %}
                     </div>
                 </div>
-            </form>
         </div>
         <div id="content-2">
-            <div id="united_form">
-
-                {% include 'create_and_edit_items/percent.html' %}
-            </div>
-            <div class="my-4">
-                <button type="submit"  class="btn btn-primary">Submit all</button>
-            </div>
-            <form action="" id="sku_form" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <div class="container">
                     <div class="row text-center">
                         {% for detail in details %}
@@ -125,6 +118,30 @@
 
                 <div class="container text-md-center text-start my-5">
                     <div class="row gy-3">
+                        <div class="col-12 col-md-6">
+                            <label for="id_trade">
+                                <p class="text-light">Coffee:</p>
+                                {{ form.Coffee }}
+                            </label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="id_trade">
+                                <p class="text-light">IN:</p>
+                                {{ form.IN }}
+                            </label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="id_trade">
+                                <p class="text-light">Tablets:</p>
+                                {{ form.Tablets }}
+                            </label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="id_trade">
+                                <p class="text-light">Countlines:</p>
+                                {{ form.Countlines }}
+                            </label>
+                        </div>
 
                         <div class="col-12 col-md-6">
                             <label for="id_trade">
@@ -138,10 +155,10 @@
                                 {{ form.territory }}
                             </label>
                         </div>
-
-                        <button type="submit" id="submit_all" class="btn fw-medium btn-warning btn2 mt-5 mb-md-4" value="Save">
+                        <button type="submit" class="btn fw-medium btn-warning btn2 mt-5 mb-md-4">
                             Send
                         </button>
+
                         <a href="{% url 'excel:export' %}" class="c">Download Vistits</a>
                     </div>
                 </div>

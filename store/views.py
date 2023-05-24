@@ -32,7 +32,11 @@ def index(request):
             trade_id=trade,
             territory_id=territory,
             user_id=user,
-            comment=comment
+            comment=comment,
+            Coffee=request.POST.get('Coffee'),
+            IN=request.POST.get('IN'),
+            Tablets=request.POST.get('Tablets'),
+            Countlines=request.POST.get('Countlines'),
         )
         for x in sku_ids:
             visit.sku.add(Sku.objects.get(id=x))

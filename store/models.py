@@ -32,20 +32,21 @@ class PercentItem(models.Model):
         return self.name_per
 
 
-a = '10%'
-b = '20%'
-c = '30%'
-d = '40%'
-e = '50%'
-f = '60%'
-g = '70%'
-h = '80%'
-i = '90%'
-j = '100%'
+a = '0%'
+b = '10%'
+c = '20%'
+d = '30%'
+e = '40%'
+f = '50%'
+g = '60%'
+h = '70%'
+i = '80%'
+j = '90%'
+k = '100%'
 Percents = [
-    (a, '10%'), (b, '20%'), (c, '30%'),
-    (d, '40%'), (e, '50%'), (f, '60%'),
-    (g, '70%'), (h, '80%'), (i, '90%'), (j, '100%')
+    (a, '0%'), (b, '10%'), (c, '20%'),
+    (d, '30%'), (e, '40%'), (f, '50%'),
+    (g, '60%'), (h, '70%'), (i, '80%'), (j, '90%'), (k, '100%')
 ]
 
 
@@ -70,10 +71,14 @@ class Visit(models.Model):
     trade = models.ForeignKey(Trade, on_delete=models.CASCADE, related_name='Магазин')
     sku = models.ManyToManyField(Sku, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    united = models.ManyToManyField(United, blank=True)
+    Coffee = models.CharField(max_length=20, choices=Percents, null=True)
+    IN = models.CharField(max_length=20, choices=Percents, null=True)
+    Tablets = models.CharField(max_length=20, choices=Percents, null=True)
+    Countlines = models.CharField(max_length=20, choices=Percents, null=True)
     detail = models.ManyToManyField(Details, blank=True)
     comment = models.CharField(max_length=255, blank=True, null=True)
     visit_date = models.DateField(auto_now=True, null=True)
+
 
     def __str__(self):
         return f'{self.trade} {self.visit_date}'

@@ -1,7 +1,7 @@
 {% for percent in percent_it %}
 
 
-    <form hx-post="{% url 'store:create_united' %}" id="sku_form"
+    <form hx-post="{% url 'store:create_united' %}" id=""
           hx-on="htmx:afterRequest: this.remove()"
           hx-trigger="click from:#submit_all">
         <div class="container ">

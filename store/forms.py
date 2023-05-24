@@ -8,11 +8,15 @@ class VisitForm(forms.ModelForm):
     territory = forms.Select()
     sku = forms.ChoiceField()
     detail = forms.ChoiceField(required=False)
+    Coffee = forms.ChoiceField(choices=Percents, widget=forms.Select(attrs={'class': 'form-control'}), required=True,)
+    IN = forms.ChoiceField(choices=Percents, widget=forms.Select(attrs={'class': 'form-control'}), required=True,)
+    Tablets = forms.ChoiceField(choices=Percents, widget=forms.Select(attrs={'class': 'form-control'}), required=True,)
+    Countlines = forms.ChoiceField(choices=Percents, widget=forms.Select(attrs={'class': 'form-control'}), required=True,)
     comment = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), label='comment', required=False)
 
     class Meta:
         model = Visit
-        fields = ['trade', 'territory', 'sku', 'detail', 'comment']
+        fields = ['trade', 'territory', 'sku', 'detail', 'Coffee', 'IN', 'Tablets', 'Countlines', 'comment']
 
 
 class TerritoryForm(forms.ModelForm):
@@ -53,7 +57,7 @@ class DetailsForm(forms.ModelForm):
 
 
 class UnitedForm(forms.ModelForm):
-    percent = forms.ChoiceField(choices=Percents, widget=forms.Select(attrs={'class': 'form-control'}),required=True,
+    percent = forms.ChoiceField(choices=Percents, widget=forms.Select(attrs={'class': 'form-control'}), required=True,
                                 label='Percents')
 
     class Meta:
