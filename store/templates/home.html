@@ -27,6 +27,11 @@
                                     Add Territory
                                 </a>
                             </li>
+                            <li>
+                                <a href="{% url 'store:create_detail' %}" class="btn text-capitalize dropdown-item">
+                                    Add Details
+                                </a>
+                            </li>
                             <li><a class="dropdown-item" href="{% url 'users:sign_out' %}">Exit</a></li>
                         </ul>
                     </div>
@@ -35,12 +40,12 @@
         </header>
     </div>
     <br><br>
+    
     <div class="tabs">
-        <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
-        <label for="tab-btn-1">Storecheck</label>
-        <input type="radio" name="tab-btn" id="tab-btn-2" value="">
-        <label for="tab-btn-2">Details</label>
-
+            <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+            <label for="tab-btn-1">Storecheck</label>
+            <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+            <label for="tab-btn-2">Details</label>
         <div id="content-1">
             <form hx-post="{% url 'store:home' %}" enctype="multipart/form-data" id="sku_form" method="post"
                   hx-on="htmx:afterRequest: this.remove()"
@@ -115,7 +120,7 @@
                         </div>
                     </div>
                 </div>
-
+            <!-- if user.is_staff  -->
                 <div class="container text-md-center text-start my-5">
                     <div class="row gy-3">
                         <div class="col-12 col-md-6">
@@ -155,6 +160,7 @@
                                 {{ form.territory }}
                             </label>
                         </div>
+                        <!-- if user.is_staff  -->
                         <button type="submit" class="btn fw-medium btn-warning btn2 mt-5 mb-md-4">
                             Send
                         </button>

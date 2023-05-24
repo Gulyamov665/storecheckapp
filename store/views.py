@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from store.forms import VisitForm, TradeForm, TerritoryForm, SkuForm, UnitedForm
+from store.forms import VisitForm, TradeForm, TerritoryForm, SkuForm, UnitedForm, DetailsForm,PercentForm
 from store.models import Details, Sku, United, Visit, PercentItem
 
 
@@ -125,3 +125,24 @@ def del_sku(request, pk):
 
 def test(request):
     return render(request, 'index.html')
+
+
+def create_detail(request):
+    detail_form = DetailsForm(request.POST or None)
+    if detail_form.is_valid():
+        instance=detail_form.save(commit=False)
+        instance.user = request.user
+        instance.save()
+        return redirect('store:home')
+    return render(request, 'create_and_edit_items/create_detail.html',{
+        'detail_form':detail_form
+    })
+
+def create_percentage(request):
+    percentage_form = PercentForm(request.POST or None)
+    if percentage_form.is_valid():
+        percentage_form.save()
+        return redirect('store:home')
+    return render(request, 'create_and_edit_items/create_percentage.html',{
+        'percentage_form':percentage_form
+    })
