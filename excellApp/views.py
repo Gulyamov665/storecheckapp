@@ -4,7 +4,7 @@ from itertools import count
 from django.http import HttpResponse
 from openpyxl.styles import Font, Alignment
 import openpyxl
-from store.models import Visit, Sku, Details
+from store.models import Visit, Sku, Details, PercentItem
 
 
 def export_xlsx(request):
@@ -25,14 +25,21 @@ def export_xlsx(request):
 
     sku_column_count = len(sku_names)
 
-    details_names = list(Details.objects.filter().values_list('name', flat=True))
+    details_names = list(Details.objects.filter(user=request.user).values_list('name', flat=True))
     for i, detail in enumerate(details_names):
         column_detail = i + 3
         detail_column = sku_column_count + column_detail
         ws.cell(row=1, column=detail_column, value=detail)
 
-    coment = len(sku_names)+len(details_names)
+    all_column = len(sku_names)+len(details_names)
+    per_name= list(PercentItem.objects.filter().values_list('name_per', flat=True))
+    for u, name in enumerate(per_name):
+        column_per = u +3
+        column_percent=all_column+column_per
+        ws.cell(row=1, column=column_percent, value=name)
 
+    
+    coment=len(sku_names)+len(details_names)+len(per_name)
     ws.cell(row=1, column=coment + 3, value='Comments')
     ws.cell(row=1, column=coment + 4, value='Percent')
 
@@ -46,7 +53,10 @@ def export_xlsx(request):
         row = i + 2  # Start at row 2
         ws.cell(row=row, column=1, value=visit.territory.territory_name)
         ws.cell(row=row, column=2, value=visit.trade.trade_name)
-
+        ws.cell(row=row, column=column_percent-3, value=visit.Coffee)
+        ws.cell(row=row, column=column_percent-2, value=visit.IN)
+        ws.cell(row=row, column=column_percent-1, value=visit.Tablets)
+        ws.cell(row=row, column=column_percent, value=visit.Countlines)
         ws.cell(row=row, column=coment + 3, value=visit.comment)
 
         # Get all Sku names
@@ -76,7 +86,7 @@ def export_xlsx(request):
                 ws.cell(row=row, column=detail_column, value='+')
                 
             else:
-                ws.cell(row=row, column=detail_column, value=0)
+                ws.cell(row=row, column=detail_column, value='-')
                 
         percentage_sku_found = round((num_sku_found / num_sku) * 100)
         ws.cell(row=row, column=coment + 4, value=f'{percentage_sku_found}%')
