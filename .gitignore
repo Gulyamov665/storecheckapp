@@ -1,2 +1,2 @@
 storevenv/*
-media/*
+db.sqlite3
